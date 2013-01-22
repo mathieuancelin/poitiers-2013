@@ -485,46 +485,46 @@ La vue de l'application est constituée comme ceci, dans un fichier `index.html`
 Pour pouvoir finir la vue, voici quelques snippets :
 
 * Pour faire un get http :
-```javascript
+```js
 $.get('url', function(data) {
     // data contient les données retournées par les services REST
 })
 ```
 * Pour faire un post http :
-```javascript
+```js
 $.post('url', {param1:val1, param2:val2}, function(data) {
     // data contient les données retournées par les services REST
 })
 ```
 * Pour faire un put http :
-```javascript
+```js
 $.ajax({ url: 'url', type: 'put', data: {param1: val1} }, function(data) {
     // data contient les données retournées par les services REST
 })
 ```
 * Pour faire un delete http :
-```javascript
+```js
 $.ajax({ url: 'url', type: 'delete', data: {param1: val1} }, function(data) {
     // data contient les données retournées par les services REST
 })
 ```
 * Pour définir une action lorsqu'on clique sur un bouton avec l'id 'add' :
-```javascript
+```js
 $('#add').click(function(e) {
     e.preventDefault()
     // code    
 })
 ```
 * Récupération du nom dans l'input text :
-```javascript
+```js
 $('#name').val()
 ```
 * Mise à jour du nom dans l'input text :
-```javascript
+```js
 $('#name').val('')
 ```
 * Réagir au click sur une checkbox de tâche :
-```javascript
+```js
 $('.done').live('click', function() {
     var id = $(this).attr('id')
     var done = ($(this).val() == 'on') + ''
@@ -532,7 +532,7 @@ $('.done').live('click', function() {
 })
 ```
 * Faire un for each sur le modèle avec underscore js :
-```javascript
+```js
 _.each(todos, function(todo) {
     if (todo.done) {
         // code
@@ -542,11 +542,11 @@ _.each(todos, function(todo) {
 })
 ```
 * Ajout d'une tâche dans la liste de tâche :
-```javascript
+```js
 $('#tasks').append( render('#task_tmpl', {todo: todo, checked: checked}) )
 ```
 * Changer le contenu d'une div avec un template :
-```javascript
+```js
 $('#completed').html(render('#completed_tmpl', {remaining: 3, total: todos.length}))
 ```
 
@@ -613,7 +613,7 @@ Vous remarquerez que beaucoup de nouveaux attributs (ng-*)sont ajoutés dans les
 
 Le code du contrôleur côté client se trouve dans un fichier `controller.js` comme spécifié par `ng-controller="TodoController"` :
 
-```javascript
+```js
 function TodoController($scope, $http) {
   // modèle
   $scope.todos = [];
@@ -649,13 +649,13 @@ Chaque contrôleur opère sur une `$scope` spécifique ce qui permet d'utiliser 
 Pour pouvoir finir la vue, voici quelques snippets :
 
 * Pour faire un get http :
-```javascript
+```js
 $http.get('url').success(function(data) {
     // data contient les données retournées par les services REST
 });
 ```
 * Pour faire un post http :
-```javascript
+```js
 $http({
     method: 'POST',
     url: 'url',
@@ -666,7 +666,7 @@ $http({
 });
 ```
 * Pour faire un put http :
-```javascript
+```js
 $http({
     method: 'PUT',
     url: 'url',
@@ -677,23 +677,23 @@ $http({
 });
 ```
 * Pour faire un delete http :
-```javascript
+```js
 $http.delete('url')
 ```
 * Pour filter un tableau avec underscore js
-```javascript
+```js
 _.filter($scope.todos, function(todo) {
     // code
 })
 ```
 * Pour éliminer des éléments d'un tableau avec underscore js
-```javascript
+```js
 _.reject($scope.todos, function(todo) {
    // code
 })
 ```
 * Pour faire un for each sur un tableau avec underscore js
-```javascript
+```js
 _.each($scope.todos, function(todo) {
     // code
 })
