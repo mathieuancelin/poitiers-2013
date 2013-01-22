@@ -346,6 +346,7 @@ public class UserController {
 Maintenant que la partie serveur est finie, il est possible de la tester sans IHM. Pour cela utilisez un client HTTP tel que cURL pour via un plugin du navigateur :
 
 * Test de création des tâches
+
 ```shell
 $ curl --data "name=Acheter%20des%20bieres" http://localhost:8080/todo/api/todos
 {"id":1, "name":"Acheter des bieres", "done":false}
@@ -353,16 +354,19 @@ $ curl --data "name=Faire%20du%20Java%20EE" http://localhost:8080/todo/api/todos
 {"id":2, "name":"Faire du Java EE", "done":false}
 ```
 * Test de récupération des tâches
+
 ```shell
 $ curl http://localhost:8080/todo/api/todos
 [{"id":1, "name":"Acheter des bières", "done":false}, {"id":2, "name":"Faire du Java EE", "done":false}]
 ```
 * Test de mise à jour des tâches
+
 ```shell
 $ curl -X PUT --data "done=true" http://localhost:8080/todo/api/todos/1
 {"id":1, "name":"Acheter des bières", "done":true}
 ```
 * Test de suppression des tâches
+
 ```shell
 $ curl -X DELETE http://localhost:8080/todo/api/todos/1
 $ curl http://localhost:8080/todo/api/todos
@@ -377,12 +381,14 @@ JQuery est un framework incontournable pour manipuler vos pages HTML via une API
 Les différents cas à couvrir pas votre IHM sont les suivant :
 
 * Un message situé en haut de la page informe l'utilisateur du nombre de tâches effectué par rapport au nombre de tâches total
+
 ```html
 <div class="alert alert-info">
    Completed: 1 / 2
 </div>
 ```
 * Lors du clic sur le bouton 'Add', si le texte entré dans l'input text du formulaire n'est pas vide, créer une tâche (via le service REST approprié) et l'ajouter dans la liste de tâche.
+
 ```html
 <ul class="unstyled">
     <li>
@@ -485,54 +491,54 @@ La vue de l'application est constituée comme ceci, dans un fichier `index.html`
 Pour pouvoir finir la vue, voici quelques snippets :
 
 * Pour faire un get http :
-```javascript
 
+```javascript
 $.get('url', function(data) {
     // data contient les données retournées par les services REST
 })
 ```
 * Pour faire un post http :
-```javascript
 
+```javascript
 $.post('url', {param1:val1, param2:val2}, function(data) {
     // data contient les données retournées par les services REST
 })
 ```
 * Pour faire un put http :
-```javascript
 
+```javascript
 $.ajax({ url: 'url', type: 'put', data: {param1: val1} }, function(data) {
     // data contient les données retournées par les services REST
 })
 ```
 * Pour faire un delete http :
-```javascript
 
+```javascript
 $.ajax({ url: 'url', type: 'delete', data: {param1: val1} }, function(data) {
     // data contient les données retournées par les services REST
 })
 ```
 * Pour définir une action lorsqu'on clique sur un bouton avec l'id 'add' :
-```javascript
 
+```javascript
 $('#add').click(function(e) {
     e.preventDefault()
     // code    
 })
 ```
 * Récupération du nom dans l'input text :
-```javascript
 
+```javascript
 $('#name').val()
 ```
 * Mise à jour du nom dans l'input text :
-```javascript
 
+```javascript
 $('#name').val('')
 ```
 * Réagir au click sur une checkbox de tâche :
-```javascript
 
+```javascript
 $('.done').live('click', function() {
     var id = $(this).attr('id')
     var done = ($(this).val() == 'on') + ''
@@ -540,8 +546,8 @@ $('.done').live('click', function() {
 })
 ```
 * Faire un for each sur le modèle avec underscore js :
-```javascript
 
+```javascript
 _.each(todos, function(todo) {
     if (todo.done) {
         // code
@@ -551,13 +557,14 @@ _.each(todos, function(todo) {
 })
 ```
 * Ajout d'une tâche dans la liste de tâche :
-```javascript
 
+```javascript
 $('#tasks').append( render('#task_tmpl', {todo: todo, checked: checked}) )
+
 ```
 * Changer le contenu d'une div avec un template :
-```javascript
 
+```javascript
 $('#completed').html(render('#completed_tmpl', {remaining: 3, total: todos.length}))
 ```
 
@@ -625,7 +632,6 @@ Vous remarquerez que beaucoup de nouveaux attributs (ng-*)sont ajoutés dans les
 Le code du contrôleur côté client se trouve dans un fichier `controller.js` comme spécifié par `ng-controller="TodoController"` :
 
 ```javascript
-
 function TodoController($scope, $http) {
   // modèle
   $scope.todos = [];
@@ -661,15 +667,15 @@ Chaque contrôleur opère sur une `$scope` spécifique ce qui permet d'utiliser 
 Pour pouvoir finir la vue, voici quelques snippets :
 
 * Pour faire un get http :
-```javascript
 
+```javascript
 $http.get('url').success(function(data) {
     // data contient les données retournées par les services REST
 });
 ```
 * Pour faire un post http :
-```javascript
 
+```javascript
 $http({
     method: 'POST',
     url: 'url',
@@ -680,8 +686,8 @@ $http({
 });
 ```
 * Pour faire un put http :
-```javascript
 
+```javascript
 $http({
     method: 'PUT',
     url: 'url',
@@ -692,27 +698,27 @@ $http({
 });
 ```
 * Pour faire un delete http :
-```javascript
 
+```javascript
 $http.delete('url')
 ```
 * Pour filter un tableau avec underscore js
-```javascript
 
+```javascript
 _.filter($scope.todos, function(todo) {
     // code
 })
 ```
 * Pour éliminer des éléments d'un tableau avec underscore js
-```javascript
 
+```javascript
 _.reject($scope.todos, function(todo) {
    // code
 })
 ```
 * Pour faire un for each sur un tableau avec underscore js
-```javascript
 
+```javascript
 _.each($scope.todos, function(todo) {
     // code
 })
@@ -727,7 +733,4 @@ Il sera surement nécessaire de modifier votre modèle de données afin de rajou
 * POST `/api/{userId}/todos` => créé une nouvelle tâche et renvoi l'objet créé au format JSON
 * DELETE `/api/{userId}/todos/{id}` => supprimer la tâche avec l'id `{id}`
 * PUT `/api/{userId}/todos/{id}` => met à jour la tâche avec l'id `{id}`
-
-
-```javascript
 
