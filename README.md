@@ -5,9 +5,9 @@ L'énoncé du TP Java EE est disponible [ici](https://github.com/mathieuancelin/
 
 Le squelette du code Java EE est disponible [ici](https://github.com/mathieuancelin/poitiers-2013/raw/master/todo-tp.zip)
 
-L'énonce du TP Kittens pour Play est disponible [ici](https://github.com/mathieuancelin/EMN-Play/wiki/Kittens)
+L'énoncé du TP Kittens pour Play est disponible [ici](https://github.com/mathieuancelin/EMN-Play/wiki/Kittens)
 
-L'énonce du TP URL shortener pour Play est disponible [ici](https://github.com/mathieuancelin/EMN-Play/wiki/URL-shortener)
+L'énoncé du TP URL shortener pour Play est disponible [ici](https://github.com/mathieuancelin/EMN-Play/wiki/URL-shortener)
 
 Les slides de cours sont directement téléchargeable sur cette page :
 
