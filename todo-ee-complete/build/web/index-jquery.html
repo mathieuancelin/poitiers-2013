@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Todo app</title>
+        <script type="text/javascript" src="js/underscore.js"></script>
+        <script type="text/javascript" src="js/jquery-1.7.1.min.js"></script>
+        <script type="text/javascript" src="js/mustache.js"></script>
+        <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css"/>
+        <style type="text/css">
+            .done-true {
+                text-decoration: line-through;        
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class="container">
+            <h1>Todo list</h1>
+            <div class="alert alert-info" id="completed">
+                <!-- completed_tmpl -->
+            </div>
+            <form>
+                <ul class="unstyled" id="tasks">
+                    <!-- task_tmpl -->
+                </ul>
+            </form>
+            <form>
+                <div class="input-append">
+                    <input type="text" id="name"/>
+                    <button class="btn btn-primary" type="submit" id="add">
+                        <i class="icon-plus icon-white"></i> Add
+                    </button>          
+                </div>
+            </form>
+            <div>        
+                <button class="btn" type="button" id="cleanup">
+                    <i class="icon-trash"></i> Remove the completed items
+                </button>
+            </div>
+        </div>
+        <div id="templates">
+            <script type="text/html" id="completed_tmpl">
+                Completed: {{ remaining }} / {{ total }}
+            </script>
+            <script type="text/html" id="task_tmpl">
+                <li>
+                    <label class="checkbox">
+                        <input type="checkbox" class="done" id="{{ todo.id }}" {{ checked }}/>
+                        <span id="{{ todo.id }}-span" class="done-{{ todo.done }}">{{ todo.name }}</span>
+                    </label>                  
+                </li>
+            </script>
+        </div>
+        <script type="text/javascript">
+            
+            var todos = [];
+            
+            function render(templateId, view) {
+                return Mustache.render( $(templateId).html(), view )
+            }
+            
+            function refreshModel() {
+                $.get('api/todos', function(data) {
+                    todos = data
+                    refreshTodos()
+                })
+            }
+            
+            function refreshTodos() {
+                $('#tasks').html("")
+                _.each(todos, function(todo) {
+                    var checked = todo.done ? 'checked' : ''
+                    $('#tasks').append( render('#task_tmpl', {todo: todo, checked: checked}) )
+                })
+                $('#completed').html(render('#completed_tmpl', 
+                    {remaining: _.filter(todos, function(todo) {
+                        return todo.done;
+                    }).length, total: todos.length}))
+            }
+            
+            $(document).ready(function() {
+                $('#add').click(function(e) {
+                    e.preventDefault()
+                    if ($('#name').val() != '') {
+                        $.post('api/todos', {name: $('#name').val()}, function(data) {
+                            todos.push(data)
+                        })
+                    }
+                    $('#name').val('')
+                    refreshModel()
+                })
+                $('.done').live('click', function() {
+                    var id = $(this).attr('id')
+                    var done = ($(this).val() == 'on') + ''
+                    $.ajax({ url: 'api/todos/' + id, type: 'put', data: {done: done} })
+                    refreshModel()
+                })
+                $('#cleanup').click(function(e) {
+                    e.preventDefault()
+                    _.each(todos, function(todo) {
+                        if (todo.done) {
+                            $.ajax({ url: 'api/todos/' + todo.id, type: 'delete' })
+                        }
+                    })
+                    refreshModel()
+                })
+                refreshModel()
+            })
+        </script>
+    </body>    
+</html>
