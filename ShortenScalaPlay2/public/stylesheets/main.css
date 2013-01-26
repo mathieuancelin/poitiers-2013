@@ -1,0 +1,16 @@
+html, body {
+    background-color: #eee;
+}
+
+.container {
+    text-align: center; 
+    width: 400px;
+}
+
+p {
+	width: 400px;
+}
+
+table {
+	width: 400px;
+}

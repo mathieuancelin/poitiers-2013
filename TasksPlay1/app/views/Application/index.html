@@ -1,0 +1,61 @@
+#{extends 'main.html' /}
+#{set title:'Tasks' /}
+<ul id="tasks" class="unstyled">
+	#{list tasks, as:'task'}
+	<li>
+		<label class="checkbox">
+            <input type="checkbox" class="done" id="${task.id}" ${task.done ? 'checked': ''}/>
+            <span id="${task.id}-span" class="done-${task.done}">${task.name}</span>
+        </label>
+	</li>
+	#{/list}
+</ul>
+<script type="text/html" id="taskTemplate">
+	<li>
+		<label class="checkbox">
+            <input type="checkbox" class="done" id="{{id}}" {{checked}}/>
+            <span id="{{id}}-span" class="done-{{done}}">{{name}}</span>
+        </label> 
+	</li>
+</script>
+#{ifnot tasks }
+	<div id="message" class="alert">Sorry, no task available</div>
+#{/ifnot}
+<form class="form-inline">
+    <input type="text" id="name">
+    <button class="btn btn-primary" type="button" id="add">
+        <i class="icon-plus icon-white"></i>
+    </button>   
+    <button class="btn btn-danger" type="button" id="cleanup">
+        <i class="icon-trash icon-white"></i>
+    </button>       
+</form>
+    
+    
+<script type="text/javascript">
+	function render( templateId, view ) { 
+        return Mustache.render( $( '#' + templateId ).html(), view )
+    }
+	$( '#add' ).click( function( e ) {
+		e.preventDefault()
+		var nameValue = $('#name').val();
+		$('#name').val('');
+		if ( nameValue !== null && nameValue !== '' ) {
+			$.post( '@{Application.add()}', { name: nameValue }, function( task ) {
+				$( '#tasks' ).append( render( 'taskTemplate', { id: task.id, name: task.name, done: task.done } ) )
+				$( '#message' ).hide()
+			})
+		}
+	});
+	$('#cleanup').click(function(e) {
+		$('.done-true').each(function() {
+			$(this).parent().remove();
+		})
+		$.post('@{Application.cleanup}')
+	});
+	$( 'input' ).live( 'click', function( e ) {
+		var c = 'done-' + $( this ).is( ':checked' );
+		$('#' + $( this ).attr( 'id' ) + '-span').attr( 'class', c )
+		$.post( '@{Application.done()}', { id: $( this ).attr( 'id' ), done: $( this ).is( ':checked' ) } )
+	})
+</script>

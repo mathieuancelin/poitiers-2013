@@ -1,0 +1,25 @@
+#{extends 'main.html' /}
+#{set title:'Kittens' /}
+
+<div class="content">
+    <div class="row">
+        <ul class="jcarousel-skin-tango" id="mycarousel">
+            #{list cats, as:'cat'}
+                <li>
+                    ${cat.picked} vote(s)
+                    <img src="${cat.url}" alt="Face picked" width="225px" height="350px">
+                </li>
+            #{/list}
+        </ul>
+    </div>
+</div>
+<script type="text/javascript">
+    jQuery(document).ready(function() {
+        jQuery('#mycarousel').jcarousel({
+            wrap: 'circular',
+            animation: 1000,
+            visible: 2,
+            scroll: 2
+        });
+    });
+</script>

@@ -1,0 +1,19 @@
+html, body {
+    background-color: #eee;
+}
+
+.container {
+    width: 400px;
+}
+
+p {
+	width: 400px;
+}
+
+table {
+	width: 400px;
+}
+
+.done-true {
+    text-decoration: line-through;        
+}
